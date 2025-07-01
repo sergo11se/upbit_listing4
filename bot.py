@@ -1,14 +1,17 @@
 import logging
 import asyncio
-import aiohttp
 from aiogram import Bot, Dispatcher
+from aiogram.types import Message
+from aiogram.utils.keyboard import ReplyKeyboardRemove
+import aiohttp
 
 TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
 CHAT_ID = "YOUR_CHAT_ID"
 
-bot = Bot(token=TOKEN)
-dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
+
+bot = Bot(token=TOKEN)
+dp = Dispatcher()
 
 async def check_upbit_listings():
     url = "https://api.upbit.com/v1/market/all?isDetails=false"
@@ -40,4 +43,5 @@ async def main():
     await asyncio.gather(check_upbit_listings(), notify_alive())
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    dp.run(main())
+
